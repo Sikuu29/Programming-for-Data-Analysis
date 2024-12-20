@@ -103,3 +103,26 @@ elif page == "Model":
         f"<h3 style='color: darkblue;'>Predicted Temperature: <span style='color: orange;'>{round(predi, 2)}</span></h3>",
         unsafe_allow_html=True
     )
+
+# Data Overview Page
+if page == "Data Overview":
+    st.markdown(
+        "<h1 style='color: maroon;'>Data Overview</h1>",
+        unsafe_allow_html=True
+    )
+    st.write("### Information about the dataset")
+    st.write("View the notebook below:")
+
+    def notebook_to_html(notebook_path):
+        with open(notebook_path, "r", encoding="utf-8") as file:
+            notebook_content = nbformat.read(file, as_version=4)
+        html_exporter = HTMLExporter()
+        body, _ = html_exporter.from_notebook_node(notebook_content)
+        return body
+
+    try:
+        notebook_html = notebook_to_html(r"C:\Program Files\JetBrains\PyCharm 2024.3.1\sikas_project\Sikas_project_final.ipynb")
+        st.components.v1.html(notebook_html, height=800, width=1000, scrolling=True)
+    except Exception as e:
+        st.error(f"Error displaying the notebook: {e}")
+
